@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA Calculator</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>CGPA Calculator</h1>
+
+    <!-- Upper Section: Display previous GPA, CGPA -->
+    <div class="upper-section section">
+        <h2>Previous CGPA Results</h2>
+        <table class="result-table" id="cgpa-table">
+            <thead>
+            <tr>
+                <th>Semester</th>
+                <th>Total Credit Points (TCP)</th>
+                <th>Total Load Units (TLU)</th>
+                <th>GPA</th>
+                <th>CGPA</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Data will be inserted here via JavaScript -->
+            </tbody>
+        </table>
+        <p id="no-data" style="text-align:center;">No data available</p>
+    </div>
+
+    <!-- Lower Section: CGPA Calculation Form -->
+    <div class="lower-section section">
+        <h2>Enter Course Units and Grades</h2>
+        <div id="course-list"></div>
+        <button id="add-course-btn" style="display:none;">Add Another Course</button>
+        <form id="cgpa-form">
+            <input type="submit" value="Calculate GPA & Update CGPA">
+        </form>
+
+        <p id="error-message" class="error"></p>
+
+        <div class="output">
+            <strong>Current GPA:</strong> <span id="gpa-output"></span><br>
+            <strong>Updated CGPA:</strong> <span id="cgpa-output"></span>
+        </div>
+    </div>
+</div>
+
+<!-- Courtesy note -->
+<p style="text-align: center; margin-top: 20px;">Courtesy by CSC 208 Group 15 Members </p>
+
+<script src="script.js"></script>
+
+</body>
+</html>
