@@ -11,6 +11,8 @@ const cgpaOutput = document.getElementById('cgpa-output');
 const cgpaTable = document.getElementById('cgpa-table').querySelector('tbody');
 const noDataMessage = document.getElementById('no-data');
 const errorMessage = document.getElementById('error-message');
+const submittedCourseTable = document.getElementById('submitted-course-body');
+const noCourseDataMessage = document.getElementById('no-course-data');
 
 // Grade points based on the grading scale
 const gradePoints = {
@@ -30,21 +32,22 @@ document.addEventListener('DOMContentLoaded', () => {
 // Function to add a new course input
 function addNewCourse() {
     courseCount++;
-    const courseDiv = document.createElement('div');
-    courseDiv.innerHTML = `
-        <label>Course ${courseCount} Units</label>
-        <input type="number" class="course-unit" min="1" max="5" required>
-        <label>Course ${courseCount} Grade</label>
-        <select class="course-grade">
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-            <option value="E">E</option>
-            <option value="F">F</option>
-        </select>
+    const courseRow = document.createElement('tr');
+    courseRow.innerHTML = `
+        <td><input type="text" class="course-name" placeholder="Enter course name" required></td>
+        <td><input type="number" class="course-unit" min="1" max="5" required></td>
+        <td>
+            <select class="course-grade">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+            </select>
+        </td>
     `;
-    courseList.appendChild(courseDiv);
+    courseList.appendChild(courseRow);
 
     // After the first course is added, show the "Add Another Course" button
     if (courseCount === 1) {
@@ -58,24 +61,40 @@ addCourseBtn.addEventListener('click', function () {
 });
 
 form.addEventListener('submit', function (event) {
-    event.preventDefault();
+    event.preventDefault(); // Prevent form submission
     errorMessage.textContent = '';
 
+    const courseNames = document.querySelectorAll('.course-name');
     const courseUnits = document.querySelectorAll('.course-unit');
     const courseGrades = document.querySelectorAll('.course-grade');
     let currentTCP = 0;
     let currentTLU = 0;
 
-    // Calculate TCP and TLU for current semester
+    // Iterate over each course entry
     for (let i = 0; i < courseUnits.length; i++) {
+        const courseName = courseNames[i].value.trim();
         const unit = parseFloat(courseUnits[i].value);
         const grade = courseGrades[i].value;
 
-        if (unit < 1) {
-            errorMessage.textContent = 'Each course must have at least 1 unit.';
+        // Check for empty course name or invalid unit value
+        if (courseName === '' || unit < 1) {
+            errorMessage.textContent = `Please enter a valid course name and unit for course ${i + 1}`;
             return;
         }
 
+        // Add course data to the submitted courses table
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td>${courseName}</td>
+            <td>${unit}</td>
+            <td>${grade}</td>
+        `;
+        submittedCourseTable.appendChild(newRow);
+
+        // Hide "No data" message if data is submitted
+        noCourseDataMessage.style.display = 'none';
+
+        // Calculate TCP and TLU
         const gradePoint = gradePoints[grade];
         currentTCP += unit * gradePoint;
         currentTLU += unit;

@@ -34,8 +34,21 @@
     <!-- Lower Section: CGPA Calculation Form -->
     <div class="lower-section section">
         <h2>Enter Course Units and Grades</h2>
-        <div id="course-list"></div>
+
+        <table id="course-table" class="input-table">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Units</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody id="course-list">
+                <!-- Course rows will be inserted here via JavaScript -->
+            </tbody>
+        </table>
         <button id="add-course-btn" style="display:none;">Add Another Course</button>
+
         <form id="cgpa-form">
             <input type="submit" value="Calculate GPA & Update CGPA">
         </form>
@@ -46,6 +59,24 @@
             <strong>Current GPA:</strong> <span id="gpa-output"></span><br>
             <strong>Updated CGPA:</strong> <span id="cgpa-output"></span>
         </div>
+    </div>
+
+    <!-- New Section: Display Submitted Course Data -->
+    <div class="submitted-courses section">
+        <h2>Submitted Course Data</h2>
+        <table class="result-table" id="submitted-course-table">
+            <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Units</th>
+                <th>Grade</th>
+            </tr>
+            </thead>
+            <tbody id="submitted-course-body">
+            <!-- Submitted course data will be inserted here via JavaScript -->
+            </tbody>
+        </table>
+        <p id="no-course-data" style="text-align:center;">No course data available</p>
     </div>
 </div>
 
